@@ -1,0 +1,30 @@
+{
+  "name": "movie-royale-server",
+  "version": "1.0.0",
+  "description": "Server support for Movie Royale client app",
+  "main": "movie-royale-server",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/movie-royale/movie-royale-server.git"
+  },
+  "keywords": [
+    "Movies",
+    "Social",
+    "API"
+  ],
+  "author": "Brandon Fenty, Paul Suarez, Chi Wu, Amanda Moen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/movie-royale/movie-royale-server/issues"
+  },
+  "homepage": "https://github.com/movie-royale/movie-royale-server#readme",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "pg": "^7.4.3"
+  }
+}
