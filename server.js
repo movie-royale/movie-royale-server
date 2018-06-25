@@ -40,6 +40,9 @@ const PORT = process.env.PORT;
 // rating varchar (255),
 // description varchar (255)
 // );
+// 
+// INSERT INTO users (username, password, email) VALUES ('paulsuarez', 'movieroyale', 'paulsblogging.com@gmail.com');
+// 
 // ======================
 
 
