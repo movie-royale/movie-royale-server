@@ -53,6 +53,7 @@ client.on('error', err => console.log(err));
 
 // Application Middleware
 app.use(cors());
+app.use(express.urlencoded({extended: true}));
 
 // API Endpoints
 
@@ -89,15 +90,15 @@ app.get('/api/v1/movies', (req, res) => {
 
 // this .post adds a new user to our user database
 app.post('/api/v1/users', (req, res) => {
+    console.log(req.body);
     let SQL = `INSERT INTO users(username, password, email)
     VALUES ($1, $2, $3);`;
     
-    console.log(req);
     
     let values = [
-        req.param.name,
-        req.param.password,
-        req.param.email
+        req.body.username,
+        req.body.password,
+        req.body.email
     ];
     
 
@@ -121,9 +122,9 @@ app.post('/api/v1/movies', (req, res) => {
     console.log(req);
     
     let values = [
-        req.param.title,
-        req.param.description,
-        req.param.rating
+        req.body.title,
+        req.body.description,
+        req.body.rating
     ];
     
 
