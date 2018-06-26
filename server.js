@@ -33,7 +33,8 @@ const PORT = process.env.PORT;
 // users_id SERIAL PRIMARY KEY,
 // username varchar (255),
 // password varchar (255),
-// email varchar (255)
+// email varchar(255),
+// UNIQUE (username, email)
 // );
 
 // CREATE TABLE movies(
@@ -84,13 +85,11 @@ app.post('/api/v1/users', (req, res) => {
     let SQL = `INSERT INTO users(username, password, email)
     VALUES ($1, $2, $3);`;
     
-    
     let values = [
         req.body.username,
         req.body.password,
         req.body.email
     ];
-    
 
     client.query(SQL, values)
         .then(function () {
