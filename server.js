@@ -96,7 +96,7 @@ app.post('/api/v1/users', (req, res) => {
         .catch(function (err) {
             console.error(err);
     })
-})
+});
 
 // this .post adds a new movie to our movies data base. 
 // we'll need to pull this information off a form when the user tries to add a movie for the first time.
@@ -122,7 +122,7 @@ app.post('/api/v1/movies', (req, res) => {
         .catch(function (err) {
             console.error(err);
     })
-})
+});
 
 // this returns a single, specific user from the users database
 app.get('/api/v1/users/:id', (req, res) => {
@@ -178,4 +178,4 @@ app.delete('/api/v1/movies/:id', (req, res) => {
 
 app.get('*', (req, res) => res.status(404).send(`<h1>rip scrub</h1>`));
 
-app.listen(PORT, () => console.log('The server is alive ITS ALIVE. It is listening on port: ' + PORT));
+app.listen(PORT, () => console.log(`The server is alive ITS ALIVE. It is listening on port: ${PORT}`));
