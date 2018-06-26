@@ -182,3 +182,5 @@ app.delete('/api/v1/movies/:id', (req, res) => {
 app.get('*', (req, res) => res.status(404).send(`<h1>rip scrub</h1>`));
 
 app.listen(PORT, () => console.log(`The server is alive ITS ALIVE. It is listening on port: ${PORT}`));
+
+// fixed
