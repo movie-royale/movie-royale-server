@@ -1,11 +1,10 @@
-
-
 'use strict';
 
 // Application  Dependencies
 const express = require('express');
 const cors = require('cors');
 const pg = require('pg');
+const superagent = require('superagent');
 
 // Application Setup
 
@@ -57,6 +56,19 @@ app.use(cors());
 app.use(express.urlencoded({extended: true}));
 
 // API Endpoints
+
+// Here's where we manage our TheMovieDB API requests.
+// We need to export the token in the console of the computer that is running the server. 
+app.get(`/themoviedb.org/*`, (req, res) => {
+  console.log(‘Routing a Movie Database AJAX request for ‘, req.params[0]);
+  const url = `https://api.themoviedb.org/${req.params[0]}`;
+  superagent.get(url)
+  .set(`Authorization`, `token ${process.env.THEMOVIEDB_TOKEN}`)
+  .then(
+    repos => res.send(repos.text),
+    err => res.send(err)
+    )
+});
 
 // This .get pulls all the users from our user database
 app.get('/api/v1/users', (req, res) => {
@@ -179,4 +191,4 @@ app.delete('/api/v1/movies/:id', (req, res) => {
 
 app.get('*', (req, res) => res.status(404).send(`<h1>rip scrub</h1>`));
 
-app.listen(PORT, () => console.log(`The server is alive ITS ALIVE. It is listening on port: ${PORT}`));
+app.listen(PORT, () => console.log(`The server is alive IT'S ALIVE. It is listening on port: ${PORT}`));
