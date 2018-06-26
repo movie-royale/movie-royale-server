@@ -29,13 +29,15 @@ const PORT = process.env.PORT;
 
 // ignore the below. This is where I built our tables:
 // ======================
-// CREATE TABLE users (
+// CREATE TABLE users(
+// users_id SERIAL PRIMARY KEY,
 // username varchar (255),
 // password varchar (255),
 // email varchar (255)
 // );
 
-// CREATE TABLE movies (
+// CREATE TABLE movies(
+// movies_id SERIAL PRIMARY KEY,
 // title varchar (255),
 // rating varchar (255),
 // description varchar (255)
