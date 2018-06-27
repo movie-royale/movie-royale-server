@@ -33,14 +33,17 @@ const PORT = process.env.PORT;
 // users_id SERIAL PRIMARY KEY,
 // username varchar (255),
 // password varchar (255),
-// email varchar (255)
+// email varchar (255),
+// UNIQUE (username, email)
 // );
 
 // CREATE TABLE movies(
 // movies_id SERIAL PRIMARY KEY,
 // title varchar (255),
-// rating varchar (255),
-// description varchar (255)
+// release_date varchar (255),
+// description varchar (255),
+// poster_path varchar (255),
+// UNIQUE (poster_path, description)
 // );
 // 
 // INSERT INTO users (username, password, email) VALUES ('paulsuarez', 'movieroyale', 'paulsblogging.com@gmail.com');
@@ -80,17 +83,15 @@ app.get('/api/v1/movies', (req, res) => {
 
 // this .post adds a new user to our user database
 app.post('/api/v1/users', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     let SQL = `INSERT INTO users(username, password, email)
     VALUES ($1, $2, $3);`;
-    
     
     let values = [
         req.body.username,
         req.body.password,
         req.body.email
     ];
-    
 
     client.query(SQL, values)
         .then(function () {
@@ -106,15 +107,16 @@ app.post('/api/v1/users', (req, res) => {
 // this forum will somehow populate from the api.
 // once the user confirms that, that's the movie they wanted, they can added it and it'll post the this table:
 app.post('/api/v1/movies', (req, res) => {
-    let SQL = `INSERT INTO movies(title, rating, description)
-    VALUES ($1, $2, $3);`;
+    let SQL = `INSERT INTO movies(title, release_date, description, poster_path)
+    VALUES ($1, $2, $3, $4);`;
     
-    console.log(req);
+    // console.log(req);
     
     let values = [
         req.body.title,
+        req.body.release_date,
         req.body.description,
-        req.body.rating
+        req.body.poster_path
     ];
     
 
