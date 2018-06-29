@@ -43,6 +43,7 @@ const PORT = process.env.PORT;
 // release_date varchar (255),
 // description text,
 // poster_path varchar (255),
+// user_number varchar (255),
 // UNIQUE (poster_path, description)
 // );
 // 
@@ -120,8 +121,8 @@ app.post('/api/v1/users', (req, res) => {
 // this forum will somehow populate from the api.
 // once the user confirms that, that's the movie they wanted, they can added it and it'll post the this table:
 app.post('/api/v1/movies', (req, res) => {
-    let SQL = `INSERT INTO movies(title, release_date, description, poster_path)
-    VALUES ($1, $2, $3, $4);`;
+    let SQL = `INSERT INTO movies(title, release_date, description, poster_path, user_number)
+    VALUES ($1, $2, $3, $4, $5);`;
 
     // console.log(req);
 
@@ -129,7 +130,8 @@ app.post('/api/v1/movies', (req, res) => {
         req.body.title,
         req.body.release_date,
         req.body.description,
-        req.body.poster_path
+        req.body.poster_path,
+        req.body.user_number
     ];
 
 
