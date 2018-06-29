@@ -59,7 +59,7 @@ client.on('error', err => console.log(err));
 
 // Application Middleware
 app.use(cors());
-app.use(express.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 
 // API Endpoints
 
@@ -68,8 +68,8 @@ app.get('/api/v1/users', (req, res) => {
     console.log('One small step for man. One giant step for computer-kind (handling a GET request by a client for users)')
     let SQL = `SELECT * FROM users;`;
     client.query(SQL)
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 // this .get pulls all the movies from our user database
@@ -77,8 +77,8 @@ app.get('/api/v1/movies', (req, res) => {
     console.log('One small step for man. One giant step for computer-kind (handling a GET request by a client for movies)')
     let SQL = `SELECT * FROM movies;`;
     client.query(SQL)
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 // this .post adds a new user to our user database
@@ -86,7 +86,7 @@ app.post('/api/v1/users', (req, res) => {
     // console.log(req.body);
     let SQL = `INSERT INTO users(username, password, email)
     VALUES ($1, $2, $3);`;
-    
+
     let values = [
         req.body.username,
         req.body.password,
@@ -94,12 +94,25 @@ app.post('/api/v1/users', (req, res) => {
     ];
 
     client.query(SQL, values)
-        .then(function () {
-        res.send('inserted new user into users table completed')
+        .then(() => {
+            let SQL = `SELECT users_id FROM users WHERE username=$1;`;
+            let values = [req.body.username];
+            client.query(SQL, values,
+                function (err, result) {
+                    if (err) console.error(err);
+                    console.log(result);
+                    res.send(result.rows[0]);
+            })
+                
+        
+        
         })
+
+        // res.send('inserted new user into users table completed')
+
         .catch(function (err) {
             console.error(err);
-    })
+        })
 });
 
 // this .post adds a new movie to our movies data base. 
@@ -109,76 +122,76 @@ app.post('/api/v1/users', (req, res) => {
 app.post('/api/v1/movies', (req, res) => {
     let SQL = `INSERT INTO movies(title, release_date, description, poster_path)
     VALUES ($1, $2, $3, $4);`;
-    
+
     // console.log(req);
-    
+
     let values = [
         req.body.title,
         req.body.release_date,
         req.body.description,
         req.body.poster_path
     ];
-    
+
 
     client.query(SQL, values)
         .then(function () {
-        res.send('inserted new movie into movies table completed')
+            res.send('inserted new movie into movies table completed')
         })
         .catch(function (err) {
             console.error(err);
-    })
+        })
 });
 
 // this returns a single, specific user from the users database
 app.get('/api/v1/users/:id', (req, res) => {
-    
+
     let SQL = `
         SELECT * FROM users WHERE users_id= ${req.params.id};
         `;
 
     client.query(SQL)
 
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 // this returns a single, specific movie from the movies database
 app.get('/api/v1/movies/:id', (req, res) => {
-    
+
     let SQL = `
         SELECT * FROM movies WHERE movies_id= ${req.params.id};
         `;
 
     client.query(SQL)
 
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 // this deletes a single, specific user from the users database
 app.delete('/api/v1/users/:id', (req, res) => {
-   
+
     let SQL = `
         DELETE FROM users WHERE users_id= ${req.params.id};
         `;
 
     client.query(SQL)
 
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 // this deletes a single, specific movie from the movies database
 app.delete('/api/v1/movies/:id', (req, res) => {
-   
+
     let SQL = `
         DELETE FROM movies WHERE movies_id= ${req.params.id};
         `;
 
     client.query(SQL)
 
-    .then(results => res.send(results.rows))
-    .catch(console.error);
+        .then(results => res.send(results.rows))
+        .catch(console.error);
 });
 
 app.get('*', (req, res) => res.status(404).send(`<h1>rip scrub</h1>`));
