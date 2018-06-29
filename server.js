@@ -124,7 +124,7 @@ app.post('/api/v1/movies', (req, res) => {
     let SQL = `INSERT INTO movies(title, release_date, description, poster_path, user_number)
     VALUES ($1, $2, $3, $4, $5);`;
 
-    // console.log(req);
+    console.log(req);
 
     let values = [
         req.body.title,
